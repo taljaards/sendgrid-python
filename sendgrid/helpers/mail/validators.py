@@ -42,17 +42,19 @@ class ValidateApiKey(object):
         if isinstance(request_body, str):
             self.validate_message_text(request_body)
 
-        # Default param
         elif isinstance(request_body, dict):
 
             contents = request_body.get("content", list())
 
             for content in contents:
-                if content is not None:
-                    if (content.get("type") == "text/html" or
-                            isinstance(content.get("value"), str)):
-                        message_text = content.get("value", "")
-                        self.validate_message_text(message_text)
+                if content is not None and (
+                    (
+                        content.get("type") == "text/html"
+                        or isinstance(content.get("value"), str)
+                    )
+                ):
+                    message_text = content.get("value", "")
+                    self.validate_message_text(message_text)
 
     def validate_message_text(self, message_string):
         """With a message string, check to see if it contains a SendGrid API Key

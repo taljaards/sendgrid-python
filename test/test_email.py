@@ -48,7 +48,7 @@ class TestEmailObject(unittest.TestCase):
     def test_add_rfc_email(self):
         name = "SomeName"
         address = "test@example.com"
-        name_address = "{} <{}>".format(name, address)
+        name_address = f"{name} <{address}>"
         email = Email(name_address)
         self.assertEqual(email.name, name)
         self.assertEqual(email.email, "test@example.com")

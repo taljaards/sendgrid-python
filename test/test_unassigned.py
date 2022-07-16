@@ -57,15 +57,11 @@ ret_json = '''[ {
 
 
 def get_all_ip():
-    ret_val = json.loads(ret_json)
-    return ret_val
+    return json.loads(ret_json)
 
 
 def make_data():
-    data = set()
-    data.add("208.115.214.23")
-    data.add("208.115.214.22")
-    return data
+    return {"208.115.214.23", "208.115.214.22"}
 
 
 def test_unassigned_ip_json():

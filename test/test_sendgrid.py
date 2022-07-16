@@ -35,7 +35,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(sg_impersonate.impersonate_subuser, temp_subuser)
 
     def test_useragent(self):
-        useragent = '{}{}{}'.format('sendgrid/', sendgrid.__version__, ';python')
+        useragent = f'sendgrid/{sendgrid.__version__};python'
         self.assertEqual(self.sg.useragent, useragent)
 
     def test_host(self):

@@ -48,12 +48,13 @@ def build_hello_email():
 
 def get_mock_personalization_dict():
     """Get a dict of personalization mock."""
-    mock_pers = dict()
+    mock_pers = {
+        'to_list': [
+            To("test1@example.com", "Example User"),
+            To("test2@example.com", "Example User"),
+        ]
+    }
 
-    mock_pers['to_list'] = [To("test1@example.com",
-                                  "Example User"),
-                            To("test2@example.com",
-                                  "Example User")]
 
     mock_pers['cc_list'] = [To("test3@example.com",
                                   "Example User"),

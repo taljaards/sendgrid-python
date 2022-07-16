@@ -53,6 +53,6 @@ class SendGridAPIClient(BaseInterface):
         :type host: string
         """
         self.api_key = api_key or os.environ.get('SENDGRID_API_KEY')
-        auth = 'Bearer {}'.format(self.api_key)
+        auth = f'Bearer {self.api_key}'
 
         super(SendGridAPIClient, self).__init__(auth, host, impersonate_subuser)

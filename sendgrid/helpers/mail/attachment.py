@@ -96,10 +96,7 @@ class Attachment(object):
         :param file_name: The filename of the attachment
         :type file_name: FileName, string
         """
-        if isinstance(value, FileName):
-            self._file_name = value
-        else:
-            self._file_name = FileName(value)
+        self._file_name = value if isinstance(value, FileName) else FileName(value)
 
     @property
     def file_type(self):
@@ -116,10 +113,7 @@ class Attachment(object):
         :param file_type: The MIME type of the content you are attaching
         :type file_type FileType, string, optional
         """
-        if isinstance(value, FileType):
-            self._file_type = value
-        else:
-            self._file_type = FileType(value)
+        self._file_type = value if isinstance(value, FileType) else FileType(value)
 
     @property
     def disposition(self):
@@ -188,10 +182,7 @@ class Attachment(object):
                            be displayed within the email body.
         :type content_id: ContentId, string, optional
         """
-        if isinstance(value, ContentId):
-            self._content_id = value
-        else:
-            self._content_id = ContentId(value)
+        self._content_id = value if isinstance(value, ContentId) else ContentId(value)
 
     def get(self):
         """

@@ -25,7 +25,7 @@ class BaseInterface(object):
         self.host = host
         self.impersonate_subuser = impersonate_subuser
         self.version = __version__
-        self.useragent = 'sendgrid/{};python'.format(self.version)
+        self.useragent = f'sendgrid/{self.version};python'
 
         self.client = python_http_client.Client(
             host=self.host,
