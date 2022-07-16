@@ -20,11 +20,7 @@ class Parse(object):
         Return a dictionary of key/values in the payload received from
         the webhook
         """
-        key_values = {}
-        for key in self.keys:
-            if key in self.payload:
-                key_values[key] = self.payload[key]
-        return key_values
+        return {key: self.payload[key] for key in self.keys if key in self.payload}
 
     def get_raw_email(self):
         """
@@ -32,8 +28,7 @@ class Parse(object):
         https://sendgrid.com/docs/Classroom/Basics/Inbound_Parse_Webhook/setting_up_the_inbound_parse_webhook.html#-Raw-Parameters
         """
         if 'email' in self.payload:
-            raw_email = email.message_from_string(self.payload['email'])
-            return raw_email
+            return email.message_from_string(self.payload['email'])
         else:
             return None
 
@@ -67,7 +62,6 @@ class Parse(object):
         attachments = []
         counter = 1
         for part in raw_email.walk():
-            attachment = {}
             if part.get_content_maintype() == 'multipart':
                 continue
             filename = part.get_filename()
@@ -77,7 +71,7 @@ class Parse(object):
                     ext = '.bin'
                 filename = 'part-%03d%s' % (counter, ext)
             counter += 1
-            attachment['type'] = part.get_content_type()
+            attachment = {'type': part.get_content_type()}
             attachment['file_name'] = filename
             attachment['contents'] = part.get_payload(decode=False)
             attachments.append(attachment)

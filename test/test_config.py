@@ -52,7 +52,7 @@ class UnitTests(unittest.TestCase):
 
     def test_init_environment_should_not_set_env_if_format_is_invalid(self):
         config_file = sendgrid.helpers.inbound.config.__file__
-        env_file_path = os.path.abspath(os.path.dirname(config_file)) + '/.env'
+        env_file_path = f'{os.path.abspath(os.path.dirname(config_file))}/.env'
         with open(env_file_path, 'w') as f:
             f.write('RANDOM_VARIABLE=RANDOM_VALUE=ANOTHER_RANDOM_VALUE')
         Config()

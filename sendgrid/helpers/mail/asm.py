@@ -37,10 +37,7 @@ class Asm(object):
         :param value: ID of an unsubscribe group
         :type value: GroupId, int, required
         """
-        if isinstance(value, GroupId):
-            self._group_id = value
-        else:
-            self._group_id = GroupId(value)
+        self._group_id = value if isinstance(value, GroupId) else GroupId(value)
 
     @property
     def groups_to_display(self):

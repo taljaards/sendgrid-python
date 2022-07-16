@@ -88,10 +88,7 @@ class SpamCheck(object):
         If defined, a copy of your email and its spam report will be sent here.
         :type value: string
         """
-        if isinstance(value, SpamUrl):
-            self._post_to_url = value
-        else:
-            self._post_to_url = SpamUrl(value)
+        self._post_to_url = value if isinstance(value, SpamUrl) else SpamUrl(value)
 
     def get(self):
         """

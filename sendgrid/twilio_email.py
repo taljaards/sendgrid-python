@@ -68,6 +68,10 @@ class TwilioEmailAPIClient(BaseInterface):
                         os.environ.get('TWILIO_API_SECRET') or \
                         os.environ.get('TWILIO_AUTH_TOKEN')
 
-        auth = 'Basic ' + b64encode('{}:{}'.format(self.username, self.password).encode()).decode()
+        auth = (
+            'Basic '
+            + b64encode(f'{self.username}:{self.password}'.encode()).decode()
+        )
+
 
         super(TwilioEmailAPIClient, self).__init__(auth, host, impersonate_subuser)

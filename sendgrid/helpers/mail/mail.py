@@ -119,7 +119,7 @@ class Mail(object):
         :param dicts: Flatten a dict
         :type dicts: list(dict)
         """
-        d = dict()
+        d = {}
         list_of_dicts = [d.get() for d in dicts or []]
         return {k: v for d in list_of_dicts for k, v in d.items()}
 
@@ -481,13 +481,12 @@ class Mail(object):
                 self.add_personalization(
                     personalization,
                     index=header.personalization)
+        elif isinstance(header, dict):
+            (k, v) = list(header.items())[0]
+            self._headers = self._ensure_append(
+                Header(k, v), self._headers)
         else:
-            if isinstance(header, dict):
-                (k, v) = list(header.items())[0]
-                self._headers = self._ensure_append(
-                    Header(k, v), self._headers)
-            else:
-                self._headers = self._ensure_append(header, self._headers)
+            self._headers = self._ensure_append(header, self._headers)
 
     @property
     def substitution(self):
@@ -525,14 +524,13 @@ class Mail(object):
             if not has_internal_personalization:
                 self.add_personalization(
                     personalization, index=substitution.personalization)
-        else:
-            if isinstance(substitution, list):
-                for s in substitution:
-                    for p in self.personalizations:
-                        p.add_substitution(s)
-            else:
+        elif isinstance(substitution, list):
+            for s in substitution:
                 for p in self.personalizations:
-                    p.add_substitution(substitution)
+                    p.add_substitution(s)
+        else:
+            for p in self.personalizations:
+                p.add_substitution(substitution)
 
     @property
     def custom_args(self):
@@ -583,14 +581,13 @@ class Mail(object):
             if not has_internal_personalization:
                 self.add_personalization(
                     personalization, index=custom_arg.personalization)
+        elif isinstance(custom_arg, dict):
+            (k, v) = list(custom_arg.items())[0]
+            self._custom_args = self._ensure_append(
+                CustomArg(k, v), self._custom_args)
         else:
-            if isinstance(custom_arg, dict):
-                (k, v) = list(custom_arg.items())[0]
-                self._custom_args = self._ensure_append(
-                    CustomArg(k, v), self._custom_args)
-            else:
-                self._custom_args = self._ensure_append(
-                    custom_arg, self._custom_args)
+            self._custom_args = self._ensure_append(
+                custom_arg, self._custom_args)
 
     @property
     def send_at(self):
@@ -748,10 +745,7 @@ class Mail(object):
             self._contents = self._ensure_append(
                 content, self._contents, index=index)
         else:
-            if self._contents:
-                index = len(self._contents)
-            else:
-                index = 0
+            index = len(self._contents) if self._contents else 0
             self._contents = self._ensure_append(
                 content, self._contents, index=index)
 

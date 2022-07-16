@@ -4,15 +4,12 @@ import json
 def format_ret(return_set, as_json=False):
     """ decouple, allow for modifications to return type
         returns a list of ip addresses in object or json form """
-    ret_list = list()
+    ret_list = []
     for item in return_set:
         d = {"ip": item}
         ret_list.append(d)
 
-    if as_json:
-        return json.dumps(ret_list)
-
-    return ret_list
+    return json.dumps(ret_list) if as_json else ret_list
 
 
 def unassigned(data, as_json=False):
@@ -55,5 +52,4 @@ def unassigned(data, as_json=False):
             current_ip = current["ip"]
             no_subusers.add(current_ip)
 
-    ret_val = format_ret(no_subusers, as_json=as_json)
-    return ret_val
+    return format_ret(no_subusers, as_json=as_json)
